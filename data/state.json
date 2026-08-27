@@ -92,7 +92,15 @@
         "rev2": false
       }
     ],
-    "fmLog": [],
+    "fmLog": [
+      {
+        "source": "MTP",
+        "chapter": "Financial Analysis & Planning",
+        "qtext": "",
+        "result": "correct",
+        "date": "2026-08-27"
+      }
+    ],
     "fmMistakes": [],
     "mtps": [
       {
@@ -151,8 +159,8 @@
       "2026-08-27_10": 3875
     },
     "schedule": null,
-    "_syncUpdatedAt": 1787841477562
+    "_syncUpdatedAt": 1787841483400
   },
-  "updatedAt": 1787841483400,
+  "updatedAt": 1787841503611,
   "device": "windows-app"
 }
