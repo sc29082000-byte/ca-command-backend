@@ -122,7 +122,7 @@
     ],
     "weakTopics": [],
     "dailyHours": {
-      "2026-08-27": 9.259477777777743
+      "2026-08-27": 9.759477777777743
     },
     "dailyMissionDone": {
       "day0_audit_1": true,
@@ -130,13 +130,8 @@
       "day0_audit_2": true,
       "day0_audit_0": true,
       "day0_audit": true,
-      "day0_sm_0": true,
-      "day0_sm_1": true,
-      "day0_sm_2": true,
-      "day0_sm_3": true,
-      "day0_sm_4": true,
-      "day0_sm_5": true,
-      "day0_sm": true
+      "day0_fm_0": true,
+      "day0_fm": true
     },
     "focus": {
       "active": false,
@@ -155,8 +150,8 @@
       "2026-08-27_8": 122
     },
     "schedule": null,
-    "_syncUpdatedAt": 1787836475876
+    "_syncUpdatedAt": 1787836481754
   },
-  "updatedAt": 1787836481754,
+  "updatedAt": 1787836486247,
   "device": "windows-app"
 }
