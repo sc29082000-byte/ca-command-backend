@@ -1,0 +1,7 @@
+{
+  "state": {
+    "test": "hello from sync test"
+  },
+  "updatedAt": 1000,
+  "device": "unknown"
+}
