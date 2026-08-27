@@ -121,7 +121,9 @@
       }
     ],
     "weakTopics": [],
-    "dailyHours": {},
+    "dailyHours": {
+      "2026-08-27": 2.25
+    },
     "dailyMissionDone": {},
     "focus": {
       "active": false,
@@ -132,9 +134,12 @@
       "dayIdx": 0
     },
     "studyModeOn": false,
-    "blockStudied": {},
+    "blockStudied": {
+      "2026-08-27_2": 5400,
+      "2026-08-27_4": 2700
+    },
     "schedule": null
   },
-  "updatedAt": 1787810532209,
-  "device": "web"
+  "updatedAt": 1787811494449,
+  "device": "seed"
 }
