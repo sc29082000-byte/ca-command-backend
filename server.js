@@ -1,13 +1,11 @@
 const express = require("express");
 const cors = require("cors");
-const crypto = require("crypto");
 const https = require("https");
 
 const PORT = process.env.PORT || 4001;
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_REPO = process.env.GITHUB_REPO || "sc29082000-byte/ca-command-backend"; // owner/repo
 const DATA_BRANCH = process.env.DATA_BRANCH || "main";
-const CONFIG_PATH = "data/config.json";
 const STATE_PATH = "data/state.json";
 
 if (!GITHUB_TOKEN) {
@@ -71,29 +69,11 @@ async function ghWriteJSON(path, data, sha, message) {
   return res.body;
 }
 
-function hashPin(pin) {
-  return crypto.createHash("sha256").update(String(pin)).digest("hex");
-}
-
 // In-memory cache to avoid hammering the GitHub API on every request; still
 // backed by GitHub as the source of truth so data survives Render restarts.
-let configCache = null;
-let configSha = null;
 let stateCache = null;
 let stateSha = null;
 
-async function loadConfig(force) {
-  if (configCache && !force) return configCache;
-  const { data, sha } = await ghReadJSON(CONFIG_PATH);
-  configCache = data || { pinHash: null };
-  configSha = sha;
-  return configCache;
-}
-async function saveConfig(cfg) {
-  const res = await ghWriteJSON(CONFIG_PATH, cfg, configSha, "update config");
-  configCache = cfg;
-  configSha = res.content ? res.content.sha : configSha;
-}
 async function loadState(force) {
   if (stateCache && !force) return stateCache;
   const { data, sha } = await ghReadJSON(STATE_PATH);
@@ -115,59 +95,12 @@ app.use((req, res, next) => {
   next();
 });
 
-async function requirePin(req, res, next) {
-  try {
-    const config = await loadConfig(false);
-    if (!config.pinHash) {
-      return res.status(428).json({ error: "no_pin_set", message: "Call /api/setup first to set a PIN." });
-    }
-    const pin = req.header("x-pin");
-    if (!pin || hashPin(pin) !== config.pinHash) {
-      return res.status(401).json({ error: "invalid_pin" });
-    }
-    next();
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: "server_error", message: String(e.message || e) });
-  }
-}
-
 app.get("/api/health", async (req, res) => {
-  try {
-    const config = await loadConfig(true);
-    res.json({ ok: true, pinSet: !!config.pinHash, time: new Date().toISOString() });
-  } catch (e) {
-    res.status(500).json({ ok: false, error: String(e.message || e) });
-  }
+  res.json({ ok: true, time: new Date().toISOString() });
 });
 
-app.post("/api/setup", async (req, res) => {
-  try {
-    const { pin, newPin } = req.body || {};
-    const config = await loadConfig(true);
-    if (!config.pinHash) {
-      if (!pin || String(pin).length < 4) {
-        return res.status(400).json({ error: "pin_too_short", message: "PIN must be at least 4 characters." });
-      }
-      await saveConfig({ pinHash: hashPin(pin) });
-      return res.json({ ok: true, message: "PIN set." });
-    }
-    const currentPin = req.header("x-pin");
-    if (!currentPin || hashPin(currentPin) !== config.pinHash) {
-      return res.status(401).json({ error: "invalid_pin" });
-    }
-    if (!newPin || String(newPin).length < 4) {
-      return res.status(400).json({ error: "pin_too_short" });
-    }
-    await saveConfig({ pinHash: hashPin(newPin) });
-    res.json({ ok: true, message: "PIN changed." });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: "server_error", message: String(e.message || e) });
-  }
-});
-
-app.get("/api/state", requirePin, async (req, res) => {
+// No auth — this is a private URL for a single personal user across their own devices.
+app.get("/api/state", async (req, res) => {
   try {
     const saved = await loadState(true);
     res.json({ ok: true, state: saved ? saved.state : null, updatedAt: saved ? saved.updatedAt : null });
@@ -177,7 +110,7 @@ app.get("/api/state", requirePin, async (req, res) => {
   }
 });
 
-app.post("/api/state", requirePin, async (req, res) => {
+app.post("/api/state", async (req, res) => {
   try {
     const { state, updatedAt, device } = req.body || {};
     if (!state) return res.status(400).json({ error: "missing_state" });
@@ -199,20 +132,16 @@ app.post("/api/state", requirePin, async (req, res) => {
   }
 });
 
-/* ============== PRESENCE (real-time "View Here" arbitration) ==============
- * Live, ephemeral — kept in memory only (not persisted to GitHub), since it's
- * just "who currently has the lock" and should reset naturally if the server
- * restarts. A device is considered active only while its heartbeat is recent.
- */
-const PRESENCE_TIMEOUT_MS = 25000; // heartbeat must refresh within this window
+/* ============== PRESENCE (real-time "View Here" arbitration) ============== */
+const PRESENCE_TIMEOUT_MS = 25000;
 let presence = { device: null, since: 0, label: "" };
 
-app.get("/api/presence", requirePin, (req, res) => {
+app.get("/api/presence", (req, res) => {
   const isStale = !presence.device || Date.now() - presence.since > PRESENCE_TIMEOUT_MS;
   res.json({ ok: true, active: isStale ? null : presence.device, label: isStale ? "" : presence.label, since: presence.since });
 });
 
-app.post("/api/presence/claim", requirePin, (req, res) => {
+app.post("/api/presence/claim", (req, res) => {
   const { device, label } = req.body || {};
   if (!device) return res.status(400).json({ error: "missing_device" });
   const isStale = !presence.device || Date.now() - presence.since > PRESENCE_TIMEOUT_MS;
@@ -223,7 +152,7 @@ app.post("/api/presence/claim", requirePin, (req, res) => {
   res.json({ ok: true });
 });
 
-app.post("/api/presence/heartbeat", requirePin, (req, res) => {
+app.post("/api/presence/heartbeat", (req, res) => {
   const { device, label } = req.body || {};
   if (presence.device === device) {
     presence.since = Date.now();
@@ -238,7 +167,7 @@ app.post("/api/presence/heartbeat", requirePin, (req, res) => {
   res.status(409).json({ error: "in_use", device: presence.device, label: presence.label });
 });
 
-app.post("/api/presence/release", requirePin, (req, res) => {
+app.post("/api/presence/release", (req, res) => {
   const { device } = req.body || {};
   if (presence.device === device) presence = { device: null, since: 0, label: "" };
   res.json({ ok: true });
