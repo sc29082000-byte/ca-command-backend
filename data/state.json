@@ -72,7 +72,7 @@
     ],
     "smChapters": [
       {
-        "rev1": false,
+        "rev1": true,
         "rev2": false
       },
       {
@@ -151,8 +151,8 @@
       "2026-08-27_10": 3875
     },
     "schedule": null,
-    "_syncUpdatedAt": 1787841475345
+    "_syncUpdatedAt": 1787841477562
   },
-  "updatedAt": 1787841477562,
+  "updatedAt": 1787841483400,
   "device": "windows-app"
 }
