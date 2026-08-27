@@ -1,0 +1,145 @@
+{
+  "state": {
+    "examDate": "2026-09-10",
+    "startDate": "2026-08-27",
+    "auditChapters": [
+      {
+        "coverage": false,
+        "rev1": false,
+        "rev2": false,
+        "weak": 0
+      },
+      {
+        "coverage": false,
+        "rev1": false,
+        "rev2": false,
+        "weak": 0
+      },
+      {
+        "coverage": false,
+        "rev1": false,
+        "rev2": false,
+        "weak": 0
+      },
+      {
+        "coverage": false,
+        "rev1": false,
+        "rev2": false,
+        "weak": 0
+      },
+      {
+        "coverage": false,
+        "rev1": false,
+        "rev2": false,
+        "weak": 0
+      },
+      {
+        "coverage": false,
+        "rev1": false,
+        "rev2": false,
+        "weak": 0
+      },
+      {
+        "coverage": false,
+        "rev1": false,
+        "rev2": false,
+        "weak": 0
+      },
+      {
+        "coverage": false,
+        "rev1": false,
+        "rev2": false,
+        "weak": 0
+      },
+      {
+        "coverage": false,
+        "rev1": false,
+        "rev2": false,
+        "weak": 0
+      },
+      {
+        "coverage": false,
+        "rev1": false,
+        "rev2": false,
+        "weak": 0
+      },
+      {
+        "coverage": false,
+        "rev1": false,
+        "rev2": false,
+        "weak": 0
+      }
+    ],
+    "smChapters": [
+      {
+        "rev1": false,
+        "rev2": false
+      },
+      {
+        "rev1": false,
+        "rev2": false
+      },
+      {
+        "rev1": false,
+        "rev2": false
+      },
+      {
+        "rev1": false,
+        "rev2": false
+      },
+      {
+        "rev1": false,
+        "rev2": false
+      }
+    ],
+    "fmLog": [],
+    "fmMistakes": [],
+    "mtps": [
+      {
+        "done": false,
+        "score": null,
+        "weakness": "",
+        "mistakeCat": ""
+      },
+      {
+        "done": false,
+        "score": null,
+        "weakness": "",
+        "mistakeCat": ""
+      },
+      {
+        "done": false,
+        "score": null,
+        "weakness": "",
+        "mistakeCat": ""
+      },
+      {
+        "done": false,
+        "score": null,
+        "weakness": "",
+        "mistakeCat": ""
+      }
+    ],
+    "weakTopics": [],
+    "dailyHours": {
+      "2026-08-27": 2.25
+    },
+    "dailyMissionDone": {},
+    "focus": {
+      "active": false,
+      "subject": "",
+      "task": "",
+      "remaining": 1500,
+      "running": false,
+      "dayIdx": 0
+    },
+    "studyModeOn": false,
+    "blockStudied": {
+      "2026-08-27_2": 5400,
+      "2026-08-27_4": 2700
+    },
+    "schedule": null
+  },
+  "updatedAt": 1787811494449,
+  "device": "seed"
+}
