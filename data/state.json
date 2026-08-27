@@ -122,7 +122,7 @@
     ],
     "weakTopics": [],
     "dailyHours": {
-      "2026-08-27": 7.829166666666665
+      "2026-08-27": 7.825277777777776
     },
     "dailyMissionDone": {
       "day0_audit_1": true,
@@ -148,11 +148,11 @@
       "2026-08-27_6": 1798,
       "2026-08-27_override": 1474,
       "2026-08-27_8": 122,
-      "2026-08-27_10": 106
+      "2026-08-27_10": 92
     },
     "schedule": null,
-    "_syncUpdatedAt": 1787836942593
+    "_syncUpdatedAt": 1787836945264
   },
-  "updatedAt": 1787836957598,
-  "device": "windows-app"
+  "updatedAt": 1787836961261,
+  "device": "web"
 }
