@@ -122,7 +122,7 @@
     ],
     "weakTopics": [],
     "dailyHours": {
-      "2026-08-27": 2.2552777777777777
+      "2026-08-27": 2.25
     },
     "dailyMissionDone": {},
     "focus": {
@@ -133,15 +133,14 @@
       "running": false,
       "dayIdx": 0
     },
-    "studyModeOn": true,
+    "studyModeOn": false,
     "blockStudied": {
       "2026-08-27_2": 5400,
-      "2026-08-27_4": 2700,
-      "2026-08-27_6": 19
+      "2026-08-27_4": 2700
     },
     "schedule": null,
-    "_syncUpdatedAt": 1787820380816
+    "_syncUpdatedAt": 1787811494449
   },
-  "updatedAt": 1787820390259,
-  "device": "web"
+  "updatedAt": 1787820395097,
+  "device": "android"
 }
