@@ -199,6 +199,51 @@ app.post("/api/state", requirePin, async (req, res) => {
   }
 });
 
+/* ============== PRESENCE (real-time "View Here" arbitration) ==============
+ * Live, ephemeral — kept in memory only (not persisted to GitHub), since it's
+ * just "who currently has the lock" and should reset naturally if the server
+ * restarts. A device is considered active only while its heartbeat is recent.
+ */
+const PRESENCE_TIMEOUT_MS = 25000; // heartbeat must refresh within this window
+let presence = { device: null, since: 0, label: "" };
+
+app.get("/api/presence", requirePin, (req, res) => {
+  const isStale = !presence.device || Date.now() - presence.since > PRESENCE_TIMEOUT_MS;
+  res.json({ ok: true, active: isStale ? null : presence.device, label: isStale ? "" : presence.label, since: presence.since });
+});
+
+app.post("/api/presence/claim", requirePin, (req, res) => {
+  const { device, label } = req.body || {};
+  if (!device) return res.status(400).json({ error: "missing_device" });
+  const isStale = !presence.device || Date.now() - presence.since > PRESENCE_TIMEOUT_MS;
+  if (!isStale && presence.device !== device) {
+    return res.status(409).json({ error: "in_use", device: presence.device, label: presence.label });
+  }
+  presence = { device, since: Date.now(), label: label || "" };
+  res.json({ ok: true });
+});
+
+app.post("/api/presence/heartbeat", requirePin, (req, res) => {
+  const { device, label } = req.body || {};
+  if (presence.device === device) {
+    presence.since = Date.now();
+    if (label) presence.label = label;
+    return res.json({ ok: true });
+  }
+  const isStale = !presence.device || Date.now() - presence.since > PRESENCE_TIMEOUT_MS;
+  if (isStale) {
+    presence = { device, since: Date.now(), label: label || "" };
+    return res.json({ ok: true });
+  }
+  res.status(409).json({ error: "in_use", device: presence.device, label: presence.label });
+});
+
+app.post("/api/presence/release", requirePin, (req, res) => {
+  const { device } = req.body || {};
+  if (presence.device === device) presence = { device: null, since: 0, label: "" };
+  res.json({ ok: true });
+});
+
 app.listen(PORT, () => {
   console.log(`CA Command backend listening on port ${PORT}`);
   console.log(`Persistent storage: GitHub repo ${GITHUB_REPO} (${GITHUB_TOKEN ? "token set" : "NO TOKEN — will fail"})`);
