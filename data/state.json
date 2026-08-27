@@ -11,7 +11,7 @@
       },
       {
         "coverage": false,
-        "rev1": false,
+        "rev1": true,
         "rev2": false,
         "weak": 0
       },
@@ -153,6 +153,6 @@
     "schedule": null,
     "_syncUpdatedAt": 1787841437749
   },
-  "updatedAt": 1787841473725,
+  "updatedAt": 1787841475345,
   "device": "windows-app"
 }
