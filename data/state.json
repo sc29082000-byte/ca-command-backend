@@ -133,15 +133,15 @@
       "running": false,
       "dayIdx": 0
     },
-    "studyModeOn": true,
+    "studyModeOn": false,
     "blockStudied": {
       "2026-08-27_2": 5400,
       "2026-08-27_4": 2700,
       "2026-08-27_6": 18
     },
     "schedule": null,
-    "_syncUpdatedAt": 1787820365024
+    "_syncUpdatedAt": 1787820380816
   },
-  "updatedAt": 1787820380816,
+  "updatedAt": 1787820388430,
   "device": "windows-app"
 }
