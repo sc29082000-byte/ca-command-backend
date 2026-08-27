@@ -122,7 +122,7 @@
     ],
     "weakTopics": [],
     "dailyHours": {
-      "2026-08-27": 2.25
+      "2026-08-27": 2.250277777777778
     },
     "dailyMissionDone": {},
     "focus": {
@@ -133,13 +133,15 @@
       "running": false,
       "dayIdx": 0
     },
-    "studyModeOn": false,
+    "studyModeOn": true,
     "blockStudied": {
       "2026-08-27_2": 5400,
-      "2026-08-27_4": 2700
+      "2026-08-27_4": 2700,
+      "2026-08-27_6": 1
     },
-    "schedule": null
+    "schedule": null,
+    "_syncUpdatedAt": 1787811494449
   },
-  "updatedAt": 1787811494449,
-  "device": "seed"
+  "updatedAt": 1787820365024,
+  "device": "windows-app"
 }
