@@ -124,7 +124,9 @@
     "dailyHours": {
       "2026-08-27": 5.759477777777742
     },
-    "dailyMissionDone": {},
+    "dailyMissionDone": {
+      "day0_audit_1": true
+    },
     "focus": {
       "active": false,
       "subject": "",
@@ -142,8 +144,8 @@
       "2026-08-27_8": 122
     },
     "schedule": null,
-    "_syncUpdatedAt": 1787836446558
+    "_syncUpdatedAt": 1787836451714
   },
-  "updatedAt": 1787836451714,
+  "updatedAt": 1787836460927,
   "device": "windows-app"
 }
